@@ -1,13 +1,6 @@
 ---
 # tasks file for ip-forwarder
 
-- name: Install iptables-persistent apt packages
-  become: true
-  apt:
-    update_cache: true
-    name: iptables-persistent
-    state: present
-
 - name: Enable IPv4 forwarding
   become: true
   sysctl:
@@ -35,6 +28,13 @@
     chain: POSTROUTING
     out_interface: "{{ ipfwd.wan }}"
     jump: MASQUERADE
+
+- name: Install iptables-persistent apt packages
+  become: true
+  apt:
+    update_cache: true
+    name: iptables-persistent
+    state: present
 
 - name: Persist IPv4 iptables rules
   become: true
