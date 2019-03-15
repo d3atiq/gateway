@@ -9,7 +9,7 @@
     sysctl_set: yes
     state: present
     reload: yes
-  when: ipfwd.ipv4 is defined and ipfwd.ipv4
+  when: gw.ipfwd.ipv4 is defined and gw.ipfwd.ipv4.enabled is defined and gw.ipfwd.ipv4.enabled
 
 - name: Enable IPv6 forwarding
   become: true
@@ -19,15 +19,16 @@
     sysctl_set: yes
     state: present
     reload: yes
-  when: ipfwd.ipv6 is defined and ipfwd.ipv6
+  when: gw.ipfwd.ipv6 is defined and gw.ipfwd.ipv6.enabled is defined and gw.ipfwd.ipv6.enabled
 
-- name: Enable NAT
+- name: Enable IPv4 NAT
   become: true
   iptables:
     table: nat
     chain: POSTROUTING
-    out_interface: "{{ ipfwd.wan }}"
+    out_interface: "{{ gw.ipfwd.ipv4.nat.wan }}"
     jump: MASQUERADE
+  when: gw.ipfwd.ipv4.nat is defined and gw.ipfwd.ipv4.nat.enabled is defined and gw.ipfwd.ipv4.nat.enabled
 
 - name: Install iptables-persistent apt packages
   become: true
@@ -39,7 +40,9 @@
 - name: Persist IPv4 iptables rules
   become: true
   shell: iptables-save >/etc/iptables/rules.v4
+  when: gw.ipfwd.ipv4 is defined and gw.ipfwd.ipv4.enabled is defined and gw.ipfwd.ipv4.enabled
 
 - name: Persist IPv6 iptables rules
   become: true
   shell: ip6tables-save >/etc/iptables/rules.v6
+  when: gw.ipfwd.ipv6 is defined and gw.ipfwd.ipv6.enabled is defined and gw.ipfwd.ipv6.enabled
