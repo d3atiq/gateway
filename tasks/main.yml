@@ -19,3 +19,11 @@
     state: present
     reload: yes
   when: ipfwd.ipv6 is defined and ipfwd.ipv6
+
+- name: Enable NAT
+  become: true
+  iptables:
+    table: nat
+    chain: POSTROUTING
+    out_interface: "{{ ipfwd.wan }}"
+    jump: MASQUERADE
