@@ -1,0 +1,17 @@
+---
+# tasks file for ip-forwarder
+- sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    sysctl_set: yes
+    state: present
+    reload: yes
+  when: ipfwd.ipv4 is defined and ipfwd.ipv4
+
+- sysctl:
+    name: net.ipv6.conf.all.forwarding
+    value: 1
+    sysctl_set: yes
+    state: present
+    reload: yes
+  when: ipfwd.ipv6 is defined and ipfwd.ipv6

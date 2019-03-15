@@ -1,0 +1,7 @@
+---
+# handlers file for ip-forwarder
+- name: restart procps
+  become: true
+  service:
+    name: procps
+    state: restarted
