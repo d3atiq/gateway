@@ -1,5 +1,5 @@
 ---
-# tasks file for ip-forwarder
+# tasks file for gateway
 
 - name: Enable IPv4 forwarding
   become: true

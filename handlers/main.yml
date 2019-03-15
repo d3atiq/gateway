@@ -1,5 +1,5 @@
 ---
-# handlers file for ip-forwarder
+# handlers file for gateway
 - name: restart procps
   become: true
   service:

@@ -1,6 +1,6 @@
 galaxy_info:
   author: Douglas Atique
-  description: IP forwarding configuration role
+  description: Ansible role to provide an internet gateway on Ubuntu server, with IP forwarding, NAT and firewalling
 
   license: MIT
 
